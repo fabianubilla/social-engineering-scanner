@@ -136,19 +136,15 @@ Durante años se intentó mejorar este tipo de detección agregando más palabra
 
 El problema es que el detector se vuelve cada vez más complejo sin realmente entender el mensaje.
 
-Ahí aparece la necesidad de otros enfoques.
+Por eso, cuando uno empieza a mirar cómo se detecta phishing en sistemas más reales, aparecen otras capas:
 
----
+**Machine Learning** — para aprender patrones desde muchos ejemplos, no solo desde reglas escritas a mano.
 
-## Qué vino después
+**LLMs** — para analizar mejor el contexto, la intención y el significado del mensaje.
 
-**Machine Learning** — aprender patrones desde miles de ejemplos en vez de escribir reglas a mano.
+**Headers del correo + SPF / DKIM / DMARC** — para revisar metadatos técnicos del correo, como dominios, rutas de envío, autenticación y firmas digitales.
 
-**LLMs** — analizar contexto, intención y significado como lo haría un humano.
-
-**SPF / DKIM / DMARC** — verificar si el remitente realmente es quien dice ser, mirando los metadatos del correo.
-
-También existe otra capa: los headers del correo, donde aparecen dominios, rutas de envío y autenticación. Eso lo explora el siguiente proyecto de esta serie.
+Este proyecto no implementa todo eso, pero ayuda a entender por qué esas capas existen.
 
 ---
 
