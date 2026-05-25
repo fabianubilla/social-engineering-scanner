@@ -171,3 +171,9 @@ Soy estudiante de ingeniería informática y ciberseguridad. A la fecha de este 
 Lo construí usando Claude (Anthropic) como herramienta de desarrollo. La IA tuvo un rol importante en la implementación y en las decisiones técnicas. Mi parte fue definir qué quería explorar, probar el programa, iterar y entender cómo funcionaba cada cosa.
 
 Lo comparto porque construir algo concreto me ayudó más que solo leer teoría. Espero que también le sirva a otros.
+
+---
+
+## Licencia
+
+MIT
