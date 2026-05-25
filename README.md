@@ -133,25 +133,26 @@ El sistema no comprende intención, legitimidad ni contexto. Y ese es uno de los
 
 ## Por qué las reglas no escalan
 
-Durante años se intentó mejorar este tipo de detección agregando más palabras, más excepciones, más listas negras.
+Agregar más palabras, más excepciones, más listas negras hace el detector más complejo — pero no lo hace más inteligente.
 
-El problema es que el detector se vuelve cada vez más complejo sin realmente entender el mensaje.
+Ahí aparece la necesidad de otros enfoques:
 
-Por eso, cuando uno empieza a mirar cómo se detecta phishing en sistemas más reales, aparecen otras capas:
+**Machine Learning** — aprender patrones desde muchos ejemplos, no escribir reglas a mano.
 
-**Machine Learning** — para aprender patrones desde muchos ejemplos, no solo desde reglas escritas a mano.
+**LLMs** — analizar contexto, intención y significado del mensaje.
 
-**LLMs** — para analizar mejor el contexto, la intención y el significado del mensaje.
+**Headers del correo + SPF / DKIM / DMARC** — revisar metadatos técnicos: dominios, rutas de envío, autenticación y firmas digitales.
 
-**Headers del correo + SPF / DKIM / DMARC** — para revisar metadatos técnicos del correo, como dominios, rutas de envío, autenticación y firmas digitales.
-
-Este proyecto no implementa todo eso, pero ayuda a entender por qué esas capas existen.
+Este proyecto no implementa nada de eso — pero ayuda a entender por qué esas capas existen.
 
 ---
 
-## Proyecto relacionado
+## El siguiente paso
 
-[NotPhish →](https://github.com/fabianubilla/notphish) — misma pregunta, pero con reglas + machine learning y una interfaz para usuarios reales.
+Si este scanner muestra por qué las reglas simples se quedan cortas,
+[NotPhish →](https://github.com/fabianubilla/notphish) prueba el siguiente paso:
+mantener las reglas, pero sumar más capas como heurísticas,
+machine learning e interfaz web.
 
 ---
 
