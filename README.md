@@ -149,10 +149,12 @@ Este proyecto no implementa nada de eso — pero ayuda a entender por qué esas 
 
 ## El siguiente paso
 
-Si este scanner muestra por qué las reglas simples se quedan cortas,
-[NotPhish →](https://github.com/fabianubilla/notphish) prueba el siguiente paso:
-mantener las reglas, pero sumar más capas como heurísticas,
-machine learning e interfaz web.
+A raíz de las limitaciones que aparecen en este scanner,
+decidí probar una versión más completa del mismo problema.
+
+Ese resultado es [NotPhish →](https://github.com/fabianubilla/notphish):
+un detector que mantiene la idea de reglas, pero agrega más capas,
+como heurísticas, machine learning e interfaz web.
 
 ---
 
