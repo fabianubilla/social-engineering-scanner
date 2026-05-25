@@ -1,7 +1,5 @@
 # ¿Se puede detectar phishing solo buscando palabras sospechosas?
 
-_Parte de una serie de proyectos educativos sobre ingeniería social y phishing._
-
 Este proyecto intenta hacerlo.
 
 Y falla.
