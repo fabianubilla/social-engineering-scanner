@@ -1,5 +1,7 @@
 # ¿Se puede detectar phishing solo buscando palabras sospechosas?
 
+_Parte de una serie de proyectos educativos sobre ingeniería social y phishing._
+
 Este proyecto intenta hacerlo.
 
 Y falla.
@@ -13,30 +15,20 @@ Ese fracaso es justamente la lección.
 A muchos de nosotros, cuando empezamos a aprender ciberseguridad,
 nos pasa algo parecido:
 
-vemos conceptos como phishing, ingeniería social,
-falsos positivos o bypass… pero entenderlos de verdad cuesta más
-cuando solo los leemos en teoría.
+vemos conceptos como phishing, ingeniería social, falsos positivos o bypass…
+pero entenderlos de verdad cuesta más cuando solo los leemos en teoría.
 
-Este proyecto nació justamente de eso.
-
-La idea fue construir un detector extremadamente simple,
-para entender desde dentro:
-
-- cómo funcionan las reglas básicas
-- por qué parecen buenas al inicio
-- dónde empiezan a fallar
-- y por qué eventualmente aparecieron sistemas más complejos
+Este proyecto nació de esa idea: construir un detector simple para ver desde dentro
+cómo funcionan las reglas, por qué parecen útiles al inicio y dónde empiezan a fallar.
 
 ---
 
 ## Qué vamos a aprender
 
-- Cómo funcionan los detectores basados en reglas
-- Qué son los falsos positivos y los bypass
+- Cómo funciona un detector basado en reglas
+- Por qué aparecen falsos positivos y bypass
 - Por qué el contexto es tan difícil de detectar
-- Qué limitaciones tienen herramientas simples como `grep`
-- Cómo evolucionaron los sistemas modernos:
-  ML, LLMs y verificación de identidad
+- Por qué se necesitan enfoques más avanzados
 
 ---
 
@@ -60,7 +52,6 @@ Ahí empiezan a aparecer cosas incómodas:
 - ataques que evaden el detector fácilmente
 - mensajes ambiguos
 - problemas de contexto
-- límites del análisis textual
 
 Y ahí es donde realmente empieza el aprendizaje.
 
@@ -68,12 +59,13 @@ Y ahí es donde realmente empieza el aprendizaje.
 
 ## ¿Por qué Bash?
 
-Porque Bash obliga a trabajar con reglas simples y explícitas.
+Porque Bash permite ver las reglas sin esconderlas detrás de frameworks.
 
-No hay IA ni modelos entrenados:
+El detector no usa modelos entrenados ni análisis semántico:
 solo texto, patrones y lógica básica.
 
-Eso ayuda mucho a entender cómo funcionaban muchos detectores tempranos y por qué eventualmente dejaron de ser suficientes.
+Eso ayuda a entender desde cero cómo funciona una detección basada en reglas
+y por qué eventualmente deja de ser suficiente.
 
 ---
 
@@ -159,7 +151,8 @@ primero necesitamos entender cómo se ve un mensaje normal.
 
 Un atacante finge ser un gerente y pide una transferencia urgente.
 
-El detector logra marcarlo porque el mensaje usa exactamente las palabras que las reglas esperan encontrar.
+El detector logra marcarlo porque el mensaje usa exactamente las palabras
+que las reglas esperan encontrar.
 
 ### Lo importante
 
@@ -208,6 +201,13 @@ Y cualquier sistema predecible puede ser evadido.
 
 # Patrones psicológicos detectados
 
+La ingeniería social no funciona solo por tecnología.
+
+Funciona porque empuja a las personas a decidir rápido,
+obedecer autoridad o bajar la guardia.
+
+Este script detecta tres patrones básicos:
+
 ## Urgencia
 
 Reducir el tiempo de análisis.
@@ -217,8 +217,6 @@ Ejemplos:
 - “última oportunidad”
 - “acción inmediata”
 - “tu cuenta será suspendida”
-
----
 
 ## Autoridad
 
@@ -230,8 +228,6 @@ Ejemplos:
 - banco
 - soporte técnico
 - RRHH
-
----
 
 ## Beneficio
 
@@ -273,75 +269,57 @@ El sistema no comprende:
 - contexto
 - relaciones humanas
 
-Y ese es justamente uno de los motivos por los que detectar phishing real es tan difícil.
+Y ese es uno de los motivos por los que detectar phishing real es tan difícil.
 
 ---
 
 # Por qué las reglas no escalan bien
 
-Durante años se intentó mejorar estos sistemas agregando:
+Durante años se intentó mejorar este tipo de detección agregando:
 
 - más palabras
 - más excepciones
 - más listas negras
 
-El problema es que el detector se volvía cada vez más complejo…
+El problema es que el detector se vuelve cada vez más complejo…
 sin realmente entender el mensaje.
+
+Ahí aparece la necesidad de otros enfoques.
 
 ---
 
 # Qué apareció después
 
+Cuando las reglas simples empiezan a fallar, aparecen otros enfoques.
+
 ## Machine Learning
 
 Aprender patrones completos en vez de buscar palabras exactas.
 
----
-
 ## LLMs
 
-Entender contexto, intención y semántica.
-
----
+Analizar contexto, intención y significado.
 
 ## SPF / DKIM / DMARC
 
 Verificar si el remitente realmente es quien dice ser.
 
----
+También existe otra capa importante: los headers del correo,
+donde aparecen metadatos como dominios, rutas de envío y autenticación.
 
-# El siguiente paso
+La idea central es esta:
 
-Este proyecto analiza únicamente el contenido del mensaje.
-
-La siguiente capa importante son los headers del correo:
-
-- dominios
-- rutas de envío
-- firmas digitales
-- autenticación
-
-Porque un correo puede parecer completamente legítimo…
-y aun así revelar fraude en sus metadatos.
+> detectar phishing no es solo encontrar palabras sospechosas.
+> Es combinar señales.
 
 ---
 
-# Hacia sistemas más avanzados
+# Proyecto relacionado
 
-Después de entender los límites de las reglas simples,
-el siguiente paso natural es combinar múltiples capas de análisis:
+## [NotPhish](https://github.com/fabianubilla/notphish)
 
-- heurísticas
-- Machine Learning
-- contexto
-- análisis híbrido
-
-Ese es justamente el objetivo de:
-
-## :contentReference[oaicite:0]{index=0}
-
-Un proyecto donde el detector ya no depende solamente de palabras,
-sino también de contexto y múltiples señales combinadas.
+Un proyecto donde la detección ya no depende solamente de palabras,
+sino de múltiples señales combinadas.
 
 ---
 
@@ -364,10 +342,12 @@ Sin abstracciones complejas.
 
 Soy estudiante de ingeniería informática y ciberseguridad.
 
-Desarrollé este proyecto usando Claude (Anthropic) como herramienta de apoyo durante el proceso de aprendizaje y construcción del detector.
+Desarrollé este proyecto usando Claude (Anthropic) como herramienta de apoyo
+durante el proceso de aprendizaje y construcción del detector.
 
-Gran parte de la implementación fue iterativa:
-probar ideas, leer el código, modificar cosas, romperlas, volver a entenderlas y descubrir progresivamente por qué estos sistemas funcionan… y por qué fallan.
+La implementación fue iterativa:
+probar ideas, leer el código, modificar cosas, romperlas, volver a entenderlas
+y descubrir progresivamente por qué estos sistemas funcionan… y por qué fallan.
 
-Construir algo, aunque sea simple, me ayudó muchísimo más a entender estos conceptos que solo leer teoría,
-y espero que a otros estudiantes también les pueda servir ese mismo proceso.
+Construir algo, aunque sea simple, me ayudó muchísimo más que solo leer teoría,
+y espero que a otros estudiantes también les sirva para recorrer ese mismo camino.
