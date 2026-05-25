@@ -246,26 +246,29 @@ Herramientas como `grep` no entienden significado.
 
 Solo comparan texto.
 
-Para el script:
+Para una regla simple, estas dos frases pueden activar alertas parecidas:
 
 ```text
-“Tu cuenta será suspendida”
+“Tu cuenta será suspendida. Ingresa aquí para verificar tus datos.”
 ```
 
 y
 
 ```text
-“Tu cuenta será suspendida si no pagas”
+“Te recordamos que tu suscripción vence mañana.”
 ```
 
-son simplemente cadenas de caracteres.
+Pero no significan lo mismo.
+
+La primera presiona y pide una acción sensible.
+La segunda solo informa una fecha.
 
 El sistema no comprende:
 
 - intención
 - legitimidad
 - contexto
-- relaciones humanas
+- si la solicitud tiene sentido
 
 Y ese es uno de los motivos por los que detectar phishing real es tan difícil.
 
