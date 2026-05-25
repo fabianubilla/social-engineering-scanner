@@ -51,6 +51,7 @@ cd social-engineering-scanner
 chmod +x scanner.sh
 ./scanner.sh
 ```
+![Inicio del scanner](screenshots/inicio.png)
 
 Requiere Bash. Sin dependencias externas. Funciona en Linux y macOS.
 
