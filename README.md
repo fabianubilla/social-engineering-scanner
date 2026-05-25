@@ -166,7 +166,7 @@ Bash · `grep` · `sed` · `tr` — estándar de Unix, sin dependencias.
 
 ## Sobre este proyecto
 
-Soy estudiante de ingeniería informática y ciberseguridad.
+Soy estudiante de ingeniería informática y ciberseguridad. A la fecha de este proyecto, mis conocimientos de programación están en una etapa inicial: fundamentos, lógica y exploración práctica.
 
 Lo construí usando Claude (Anthropic) como herramienta de desarrollo. La IA tuvo un rol importante en la implementación y en las decisiones técnicas. Mi parte fue definir qué quería explorar, probar el programa, iterar y entender cómo funcionaba cada cosa.
 
