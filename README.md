@@ -1,197 +1,373 @@
-# Detectar phishing con reglas simples — y por qué siempre falla
+# ¿Se puede detectar phishing solo buscando palabras sospechosas?
 
-Un script Bash interactivo para aprender los fundamentos de detección
-de ingeniería social: cómo funcionan las reglas, cuándo fallan y qué
-inventaron los ingenieros para resolverlo.
+Este proyecto intenta hacerlo.
 
-No necesitas saber programar para seguir los ejemplos.
-El script hace el trabajo y explica lo que está pasando en cada paso.
+Y falla.
+
+Ese fracaso es justamente la lección.
 
 ---
 
-## Qué vas a aprender
+# Detectar phishing con reglas simples
 
-- Qué es un detector basado en palabras clave y cómo funciona internamente
-- Qué es un **falso positivo** y por qué destruye la confianza en un sistema
-- Qué es un **bypass** y cómo un atacante diseña mensajes para evadir reglas
-- Por qué el **contexto** es el problema central que las reglas no pueden resolver
-- Qué inventaron para ir más allá: ML, LLMs, SPF/DKIM/DMARC
+A muchos de nosotros, cuando empezamos a aprender ciberseguridad,
+nos pasa algo parecido:
+
+vemos conceptos como phishing, ingeniería social,
+falsos positivos o bypass… pero entenderlos de verdad cuesta más
+cuando solo los leemos en teoría.
+
+Este proyecto nació justamente de eso.
+
+La idea fue construir un detector extremadamente simple,
+para entender desde dentro:
+
+- cómo funcionan las reglas básicas
+- por qué parecen buenas al inicio
+- dónde empiezan a fallar
+- y por qué eventualmente aparecieron sistemas más complejos
+
+---
+
+## Qué vamos a aprender
+
+- Cómo funcionan los detectores basados en reglas
+- Qué son los falsos positivos y los bypass
+- Por qué el contexto es tan difícil de detectar
+- Qué limitaciones tienen herramientas simples como `grep`
+- Cómo evolucionaron los sistemas modernos:
+  ML, LLMs y verificación de identidad
 
 ---
 
 ## La idea detrás del proyecto
 
-La respuesta más obvia a "¿cómo detecta un programa que un mensaje es fraude?"
-es: **busca palabras sospechosas**.
+Cuando uno empieza en seguridad suele pensar algo como:
 
-Eso es exactamente lo que hace este script.
+> “Si un correo dice urgente, banco o transferencia,
+> probablemente es phishing.”
 
-Y al probarlo con mensajes reales, empiezan a aparecer los problemas.
-Esos problemas son la lección.
+Y honestamente, tiene sentido.
+
+Este proyecto funciona exactamente así:
+busca patrones sospechosos usando reglas simples.
+
+El problema aparece cuando empiezas a probar mensajes reales.
+
+Ahí empiezan a aparecer cosas incómodas:
+
+- correos legítimos marcados como fraude
+- ataques que evaden el detector fácilmente
+- mensajes ambiguos
+- problemas de contexto
+- límites del análisis textual
+
+Y ahí es donde realmente empieza el aprendizaje.
 
 ---
 
-## Cómo usarlo
+## ¿Por qué Bash?
+
+Porque Bash obliga a trabajar con reglas simples y explícitas.
+
+No hay IA ni modelos entrenados:
+solo texto, patrones y lógica básica.
+
+Eso ayuda mucho a entender cómo funcionaban muchos detectores tempranos y por qué eventualmente dejaron de ser suficientes.
+
+---
+
+# Cómo usarlo
 
 ```bash
-git clone https://github.com/fivur-cs/social-engineering-scanner.git
+git clone https://github.com/fabianubilla/social-engineering-scanner.git
+
 cd social-engineering-scanner
+
 chmod +x scanner.sh
+
 ./scanner.sh
 ```
 
-Requiere Bash. Sin dependencias externas. Funciona en Linux y macOS.
+![Inicio del scanner](screenshots/inicio.png)
+
+Funciona en:
+
+- Linux
+- macOS
+- WSL
+
+Sin dependencias externas.
 
 ---
 
-## Los cuatro ejemplos guiados
+# Cómo funciona
 
-El script incluye cuatro casos en orden pedagógico.
-Cada uno se muestra en etapas — primero el mensaje, luego el análisis,
-luego el resultado, luego la explicación. Tú controlas el ritmo.
+El script analiza mensajes buscando patrones asociados a ingeniería social.
 
----
+Por ejemplo:
 
-### 1. Correo limpio — la línea base
+- urgencia
+- autoridad
+- presión
+- promesas
+- solicitudes sensibles
 
-Un newsletter real. Sin urgencia, sin autoridad, sin promesas.
+Cuando encuentra ciertas palabras o expresiones:
 
-El detector no encuentra nada — y esa es la respuesta correcta.
+- suma puntos
+- activa alertas
+- clasifica el riesgo
 
-**Lo que enseña:** antes de buscar fraude, necesitas saber cómo se ve
-un mensaje cuando no hay manipulación.
+Es un enfoque extremadamente simple.
 
----
-
-### 2. CEO Fraud — cuando el detector funciona
-
-Alguien finge ser el gerente y pide una transferencia urgente.
-Es uno de los fraudes más costosos del mundo — el FBI lo llama
-*Business Email Compromise* (BEC).
-
-El detector lo atrapa porque el atacante usó exactamente las palabras
-que el script sabe reconocer.
-
-**Lo que enseña:** las reglas funcionan cuando el atacante no sabe que existen.
-Pero hay una señal que el script no puede detectar: el **aislamiento**.
-*"No lo comentes con el equipo todavía"* es la parte más peligrosa del mensaje,
-y ninguna lista de palabras la captura.
+Y justamente por eso sirve para aprender.
 
 ---
 
-### 3. Falso positivo — cuando el detector se equivoca
+# Los cuatro ejemplos guiados
 
-Un correo legítimo de un banco avisando que una oferta vence hoy.
+El proyecto incluye cuatro escenarios pensados para mostrar problemas reales de detección.
 
-El detector activa alertas. El mensaje no es fraude.
+El script muestra:
 
-**Lo que enseña:** un detector que se equivoca demasiado se vuelve inútil.
-Si las personas reciben falsas alarmas con frecuencia, dejan de confiar
-en el sistema — y también ignoran las alertas reales.
+```text
+mensaje → análisis → resultado → explicación
+```
 
----
-
-### 4. Bypass — cuando el atacante gana
-
-Una estafa escrita para evadir este detector.
-Si la lees, es claramente manipulación.
-El script no encuentra nada.
-
-**Lo que enseña:** las reglas fijas son predecibles.
-Un atacante que las conoce puede diseñar el mensaje para evitarlas.
-Siempre existirán puntos ciegos.
+La idea es ir viendo paso a paso qué detecta,
+qué no detecta y por qué ocurren ciertos errores.
 
 ---
 
-## Los tres patrones que detecta
+## 1. Correo limpio — la línea base
 
-Los estafadores usan técnicas psicológicas documentadas para empujar
-decisiones rápidas y reducir el análisis crítico.
-El psicólogo **Robert Cialdini** las llamó *principios de persuasión*.
-Este script detecta tres:
+Un newsletter legítimo.
 
-**Urgencia** — meten prisa para que no tengas tiempo de verificar.
+El detector no encuentra nada.
 
-**Autoridad** — fingen ser tu jefe, el banco, RRHH, soporte técnico.
+Y esa es la respuesta correcta.
 
-**Promesa de beneficio** — ofrecen algo atractivo o inesperado para bajar la guardia.
+### Lo importante
 
----
-
-## Por qué falla — la parte más importante
-
-**Falsos positivos altos.**
-"Urgente" aparece en correos de trabajo legítimos. "Banco" aparece cuando
-alguien habla de su banco real. El script no sabe la diferencia — solo ve la palabra.
-
-**Se evade fácil.**
-Escribir "hazlo antes de las 15:00" en lugar de "urgente" evita
-completamente la detección. Las reglas fijas siempre tienen puntos ciegos.
-
-**No entiende contexto.**
-`grep` no sabe si "suspensión de cuenta" es un fraude o un aviso legítimo.
-Solo procesa cadenas de texto.
-
-**El score no escala.**
-Sumar 1 punto por palabra hace que un correo legítimo con mucha urgencia
-tenga el mismo score que un phishing real.
+Antes de detectar fraude,
+primero necesitamos entender cómo se ve un mensaje normal.
 
 ---
 
-## Qué inventaron para resolverlo
+## 2. CEO Fraud — cuando las reglas funcionan
 
-Cada limitación apunta a una solución real:
+Un atacante finge ser un gerente y pide una transferencia urgente.
 
-**Machine Learning** — en lugar de buscar palabras exactas, un modelo
-entrenado con miles de ejemplos aprende patrones completos. El foco pasa
-de *"¿aparece la palabra urgente?"* a *"¿el comportamiento del mensaje
-se parece a fraude?"*
+El detector logra marcarlo porque el mensaje usa exactamente las palabras que las reglas esperan encontrar.
 
-**Modelos de lenguaje (LLMs)** — entienden contexto y semántica real.
-Pueden evaluar si una solicitud tiene sentido, no solo si contiene ciertas
-palabras. ChatGPT y Claude son ejemplos.
+### Lo importante
 
-**Verificación del remitente (SPF, DKIM, DMARC)** — protocolos que
-confirman si el correo realmente viene del dominio que dice ser.
-Resuelven el problema de identidad que el texto solo no puede resolver.
+Las reglas funcionan…
+mientras el atacante no se adapte.
 
 ---
 
-## El siguiente paso en esta serie
+## 3. Falso positivo — cuando el detector se equivoca
 
-Este script analiza el **contenido** del mensaje — las palabras.
+Ahora aparece un correo legítimo de un banco.
 
-Hay otra capa igual de importante: los **headers del correo**.
-Son los metadatos que revelan por qué servidores pasó el mensaje,
-si las firmas digitales son válidas, si el dominio del remitente es real.
+El detector activa alertas.
 
-Un mensaje puede tener texto completamente normal y aun así mostrar
-señales claras de fraude en sus headers. El ejemplo de Chilexpress falso
-que aparece en el README del siguiente proyecto lo demuestra.
+Pero el mensaje no es fraude.
 
-*[header-analyzer — próximamente]*
+### Lo importante
 
-Y si quieres ver cómo evoluciona un detector cuando agregas ML y más capas:
+Si un sistema se equivoca demasiado:
 
-[NotPhish →](https://github.com/fivur-cs/notphish)
+- las personas dejan de confiar
+- empiezan a ignorar alertas
+- el detector pierde utilidad real
 
 ---
 
-## Herramientas usadas
+## 4. Bypass — cuando el atacante gana
 
-Bash · `grep` · `sed` · `tr` — herramientas estándar de Unix.
-Sin instalación, sin dependencias.
+Ahora aparece una estafa escrita específicamente para evadir este detector.
+
+La manipulación sigue ahí.
+
+Pero las palabras cambiaron.
+
+Resultado:
+
+el detector no encuentra nada.
+
+### Lo importante
+
+Las reglas fijas son predecibles.
+
+Y cualquier sistema predecible puede ser evadido.
 
 ---
 
-## Sobre este proyecto
+# Patrones psicológicos detectados
 
-Construido con asistencia de Claude (Anthropic) como parte de un proceso
-de aprendizaje en ingeniería informática y ciberseguridad.
+## Urgencia
 
-El objetivo no es mostrar código — es facilitar el entendimiento
-de problemas reales que cualquier estudiante de seguridad va a encontrar.
+Reducir el tiempo de análisis.
+
+Ejemplos:
+
+- “última oportunidad”
+- “acción inmediata”
+- “tu cuenta será suspendida”
 
 ---
 
-*fivur — estudiante de ingeniería informática y ciberseguridad*
+## Autoridad
+
+Fingir legitimidad o poder.
+
+Ejemplos:
+
+- gerente
+- banco
+- soporte técnico
+- RRHH
+
+---
+
+## Beneficio
+
+Bajar defensas ofreciendo algo atractivo.
+
+Ejemplos:
+
+- premios
+- bonos
+- descuentos
+- reembolsos
+
+---
+
+# El verdadero problema: contexto
+
+Herramientas como `grep` no entienden significado.
+
+Solo comparan texto.
+
+Para el script:
+
+```text
+“Tu cuenta será suspendida”
+```
+
+y
+
+```text
+“Tu cuenta será suspendida si no pagas”
+```
+
+son simplemente cadenas de caracteres.
+
+El sistema no comprende:
+
+- intención
+- legitimidad
+- contexto
+- relaciones humanas
+
+Y ese es justamente uno de los motivos por los que detectar phishing real es tan difícil.
+
+---
+
+# Por qué las reglas no escalan bien
+
+Durante años se intentó mejorar estos sistemas agregando:
+
+- más palabras
+- más excepciones
+- más listas negras
+
+El problema es que el detector se volvía cada vez más complejo…
+sin realmente entender el mensaje.
+
+---
+
+# Qué apareció después
+
+## Machine Learning
+
+Aprender patrones completos en vez de buscar palabras exactas.
+
+---
+
+## LLMs
+
+Entender contexto, intención y semántica.
+
+---
+
+## SPF / DKIM / DMARC
+
+Verificar si el remitente realmente es quien dice ser.
+
+---
+
+# El siguiente paso
+
+Este proyecto analiza únicamente el contenido del mensaje.
+
+La siguiente capa importante son los headers del correo:
+
+- dominios
+- rutas de envío
+- firmas digitales
+- autenticación
+
+Porque un correo puede parecer completamente legítimo…
+y aun así revelar fraude en sus metadatos.
+
+---
+
+# Hacia sistemas más avanzados
+
+Después de entender los límites de las reglas simples,
+el siguiente paso natural es combinar múltiples capas de análisis:
+
+- heurísticas
+- Machine Learning
+- contexto
+- análisis híbrido
+
+Ese es justamente el objetivo de:
+
+## :contentReference[oaicite:0]{index=0}
+
+Un proyecto donde el detector ya no depende solamente de palabras,
+sino también de contexto y múltiples señales combinadas.
+
+---
+
+# Herramientas usadas
+
+- Bash
+- grep
+- sed
+- tr
+
+Herramientas estándar de Unix/Linux.
+
+Sin frameworks.
+Sin dependencias.
+Sin abstracciones complejas.
+
+---
+
+# Sobre este proyecto
+
+Soy estudiante de ingeniería informática y ciberseguridad.
+
+Desarrollé este proyecto usando Claude (Anthropic) como herramienta de apoyo durante el proceso de aprendizaje y construcción del detector.
+
+Gran parte de la implementación fue iterativa:
+probar ideas, leer el código, modificar cosas, romperlas, volver a entenderlas y descubrir progresivamente por qué estos sistemas funcionan… y por qué fallan.
+
+Construir algo, aunque sea simple, me ayudó muchísimo más a entender estos conceptos que solo leer teoría,
+y espero que a otros estudiantes también les pueda servir ese mismo proceso.
