@@ -341,14 +341,12 @@ Sin abstracciones complejas.
 
 # Sobre este proyecto
 
-Soy estudiante de ingeniería informática y ciberseguridad.
+Soy estudiante de ingeniería informática y ciberseguridad. A la fecha de este proyecto, mis conocimientos de programación están en una etapa inicial: fundamentos, lógica y exploración práctica.
 
-Desarrollé este proyecto usando Claude (Anthropic) como herramienta de apoyo
-durante el proceso de aprendizaje y construcción del detector.
+Por eso, este proyecto fue construido usando Claude (Anthropic) como herramienta de desarrollo y aprendizaje. La IA tuvo un rol importante en la implementación, en decisiones técnicas y en la generación del código.
 
-La implementación fue iterativa:
-probar ideas, leer el código, modificar cosas, romperlas, volver a entenderlas
-y descubrir progresivamente por qué estos sistemas funcionan… y por qué fallan.
+Mi rol fue definir qué quería explorar, probar el programa, iterar ideas, evaluar propuestas, descartar lo que no tenía sentido y entender progresivamente cómo funcionaba el sistema.
 
-Construir algo, aunque sea simple, me ayudó muchísimo más que solo leer teoría,
-y espero que a otros estudiantes también les sirva para recorrer ese mismo camino.
+Lo comparto como parte de un proceso real de aprendizaje, porque construir algo concreto me ayudó mucho más que solo leer teoría.
+
+Espero que también pueda servirle a otros estudiantes que estén empezando y quieran entender estos conceptos desde un ejemplo simple, imperfecto y fácil de probar.
