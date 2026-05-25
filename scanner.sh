@@ -1,7 +1,7 @@
 #!/bin/bash
 # =============================================================================
 # social-engineering-scanner
-# learning project by fivur
+# learning project by Fabian Ubilla
 # License: MIT
 #
 # A script to learn why detecting digital manipulation is a hard problem.
@@ -36,7 +36,7 @@ cabecera() {
     clear
     echo -e "${CYAN}┌─────────────────────────────────────────────────────┐${NC}"
     echo -e "${CYAN}│${NC}  ${BLANCO}social-engineering-scanner${NC}                         ${CYAN}│${NC}"
-    echo -e "${CYAN}│${NC}  ${GRIS}learning project by fivur${NC}                          ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}  ${GRIS}learning project${NC}                          ${CYAN}│${NC}"
     echo -e "${CYAN}└─────────────────────────────────────────────────────┘${NC}"
     echo ""
 }
