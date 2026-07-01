@@ -34,7 +34,7 @@ No intenté construir una herramienta lista para producción. La idea fue empeza
 
 ## Por qué Bash
 
-Porque era una herramienta lo suficientemente simple para el nivel en el que estaba, quería entender la idea detrás del detector y no perderme todavía en tecnologías más complejas.
+Porque era una herramienta lo suficientemente simple para mi nivel de estudiante. Quería entender la idea detrás del detector y no perderme todavía en tecnologías más complejas.
 
 ## Cómo usarlo
 
