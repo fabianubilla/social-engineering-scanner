@@ -39,7 +39,7 @@ Porque era una herramienta lo suficientemente simple para mi nivel de estudiante
 ## Cómo usarlo
 
 ```bash
-git clone https://github.com/fivur-cs/social-engineering-scanner.git
+git clone https://github.com/fabianubilla/social-engineering-scanner.git
 cd social-engineering-scanner
 chmod +x scanner.sh
 ./scanner.sh
@@ -159,7 +159,7 @@ Construirlo me permitió entender de forma práctica cómo aparecen los falsos p
 
 A raíz de las limitaciones que aparecieron en este scanner, decidí probar una versión más completa del mismo problema.
 
-El resultado fue [NotPhish](https://github.com/fivur-cs/notphish): un detector que mantiene la idea de las reglas, pero agrega más capas, como heurísticas, machine learning e interfaz web.
+El resultado fue [NotPhish](https://github.com/fabianubilla/notphish): un detector que mantiene la idea de las reglas, pero agrega más capas, como heurísticas, machine learning e interfaz web.
 
 El scanner fue mi primera aproximación al problema. NotPhish nació de las preguntas que quedaron después de probarlo.
 
