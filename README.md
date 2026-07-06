@@ -4,151 +4,151 @@
 
 # Social Engineering Scanner
 
-Proyecto educativo de ciberseguridad enfocado en detectar posibles intentos de ingeniería social mediante análisis basado en reglas.
+Educational cybersecurity project focused on detecting potential social engineering attempts through rule-based analysis.
 
-## Resumen
+## Overview
 
-Social Engineering Scanner es una herramienta simple escrita en Bash que analiza mensajes buscando señales asociadas a ingeniería social.
+Social Engineering Scanner is a simple Bash-based tool that analyzes messages by looking for signals associated with social engineering.
 
-El proyecto utiliza reglas fijas y palabras clave para detectar patrones como urgencia, autoridad y promesas de beneficio.
+The project uses fixed rules and keywords to detect patterns such as urgency, authority, and promises of reward.
 
-No es una herramienta lista para producción. Es un proyecto educativo creado para entender cómo funciona un detector basado en reglas, por qué puede servir en casos simples y por qué empieza a fallar cuando cambia el contexto.
+It is not a production-ready tool. It is an educational project created to understand how a rule-based detector works, why it can be useful in simple cases, and why it begins to fail when the context changes.
 
-## Objetivo
+## Goal
 
-Con este proyecto quise entender:
+With this project I wanted to understand:
 
-- cómo funciona un detector basado en palabras clave
-- cómo se puede asignar un puntaje de riesgo a un mensaje
-- qué es un falso positivo
-- por qué las reglas simples pueden ser evadidas
-- por qué el contexto es difícil de capturar con reglas fijas
-- por qué los sistemas reales necesitan más capas de análisis
+- how a keyword-based detector works
+- how a risk score can be assigned to a message
+- what a false positive is
+- why simple rules can be bypassed
+- why context is difficult to capture with fixed rules
+- why real-world systems require additional layers of analysis
 
-## Funciones principales
+## Main Features
 
-- análisis de mensajes desde la terminal
-- detección de palabras y expresiones sospechosas
-- puntaje de riesgo basado en reglas
-- alertas por patrones de ingeniería social
-- ejemplos guiados por etapas
-- explicación del resultado después de cada análisis
-- ejecución sin dependencias externas
+- terminal-based message analysis
+- detection of suspicious words and expressions
+- rule-based risk scoring
+- alerts for social engineering patterns
+- step-by-step guided examples
+- explanation of the result after each analysis
+- runs without external dependencies
 
-## Cómo funciona
+## How It Works
 
-El script analiza un mensaje buscando palabras, frases y patrones asociados a posibles intentos de ingeniería social.
+The script analyzes a message by searching for words, phrases, and patterns associated with potential social engineering attempts.
 
-Cuando encuentra una coincidencia, suma puntos al score del mensaje y muestra una explicación de las señales detectadas.
+Whenever it finds a match, it adds points to the message score and displays an explanation of the detected signals.
 
-El enfoque es intencionalmente simple:
+The approach is intentionally simple:
 
 ```text
-buscar patrón → sumar puntos → mostrar alerta
+search for a pattern → add points → display alert
 ```
 
-Esto permite entender fácilmente por qué el sistema llega a un resultado determinado.
+This makes it easy to understand why the system reaches a particular result.
 
-La misma simpleza también muestra sus límites. El script no entiende intención, legitimidad ni contexto. Solo compara texto contra reglas previamente definidas.
+That same simplicity also reveals its limitations. The script does not understand intent, legitimacy, or context. It only compares text against predefined rules.
 
-## Patrones que detecta
+## Detected Patterns
 
-El scanner busca señales relacionadas con tres patrones frecuentes en mensajes de ingeniería social.
+The scanner searches for signals related to three common social engineering patterns.
 
-### Urgencia
+### Urgency
 
-Busca expresiones que intentan presionar a la persona para actuar rápido.
+Looks for expressions that attempt to pressure someone into acting quickly.
 
-Ejemplos:
+Examples:
 
-- hoy
-- ahora
-- urgente
-- vence
-- último aviso
+- today
+- now
+- urgent
+- expires
+- final notice
 
-### Autoridad
+### Authority
 
-Busca señales donde el mensaje intenta apoyarse en una figura de poder o confianza.
+Looks for signals where the message relies on a figure of authority or trust.
 
-Ejemplos:
+Examples:
 
-- gerente
-- banco
-- soporte
-- recursos humanos
-- dirección
+- manager
+- bank
+- support
+- human resources
+- management
 
-### Promesa de beneficio
+### Promise of Reward
 
-Busca mensajes que intentan llamar la atención ofreciendo algo atractivo.
+Looks for messages that try to attract attention by offering something appealing.
 
-Ejemplos:
+Examples:
 
-- premio
-- bono
-- beneficio
-- regalo
-- promoción
+- prize
+- bonus
+- reward
+- gift
+- promotion
 
-Estos patrones no prueban por sí solos que un mensaje sea fraude. Solo indican señales que pueden aumentar el riesgo.
+These patterns alone do not prove that a message is fraudulent. They only indicate signals that may increase its risk.
 
-## Casos incluidos
+## Included Scenarios
 
-El proyecto incluye cuatro ejemplos en orden progresivo.
+The project includes four progressively designed examples.
 
-Cada caso se muestra por etapas: primero el mensaje, luego el análisis, después el resultado y finalmente una explicación. El ritmo se controla con Enter.
+Each scenario is presented step by step: first the message, then the analysis, followed by the result, and finally an explanation. The pace is controlled by pressing Enter.
 
-### 1. Correo limpio
+### 1. Clean Email
 
-Un mensaje legítimo usado como línea base.
+A legitimate message used as a baseline.
 
-El objetivo es comprobar que el scanner no marque como amenaza todo lo que analiza.
+The goal is to verify that the scanner does not classify everything it analyzes as a threat.
 
 ### 2. CEO Fraud
 
-Un mensaje donde alguien finge ser una figura de autoridad y pide actuar con urgencia.
+A message in which someone impersonates a figure of authority and requests urgent action.
 
-Este caso muestra cuándo las reglas pueden funcionar bien, especialmente cuando el atacante usa palabras que el sistema espera encontrar.
+This case demonstrates when rules can work well, especially when the attacker uses the words the system expects to find.
 
-### 3. Falso positivo
+### 3. False Positive
 
-Un mensaje legítimo que activa señales sospechosas.
+A legitimate message that triggers suspicious signals.
 
-Este caso muestra un problema importante: si un detector se equivoca demasiado, las personas pueden dejar de confiar en sus alertas.
+This case illustrates an important problem: if a detector makes too many mistakes, people may stop trusting its alerts.
 
 ### 4. Bypass
 
-Un mensaje fraudulento escrito para evitar las reglas del scanner.
+A fraudulent message intentionally written to avoid the scanner's rules.
 
-Este caso muestra que las reglas fijas son predecibles. Si alguien conoce cómo funciona el detector, puede intentar escribir el mensaje de una forma que no active alertas.
+This case demonstrates that fixed rules are predictable. If someone understands how the detector works, they can attempt to write the message in a way that avoids triggering alerts.
 
-## Instalación y uso
+## Installation and Usage
 
-Clonar el repositorio:
+Clone the repository:
 
 ```bash
 git clone https://github.com/fabianubilla/social-engineering-scanner.git
 cd social-engineering-scanner
 ```
 
-Dar permisos de ejecución:
+Grant execution permissions:
 
 ```bash
 chmod +x scanner.sh
 ```
 
-Ejecutar el scanner:
+Run the scanner:
 
 ```bash
 ./scanner.sh
 ```
 
-Requiere Bash. Funciona en Linux y macOS.
+Requires Bash. Works on Linux and macOS.
 
-No necesita dependencias externas.
+No external dependencies are required.
 
-## Estructura del proyecto
+## Project Structure
 
 ```text
 social-engineering-scanner/
@@ -156,58 +156,58 @@ social-engineering-scanner/
 └── README.md
 ```
 
-## Archivo principal
+## Main File
 
 ### `scanner.sh`
 
-Script principal del proyecto.
+Main project script.
 
-Contiene la lógica de detección, los mensajes de ejemplo, el sistema de puntaje y las explicaciones que se muestran durante la ejecución.
+Contains the detection logic, example messages, scoring system, and the explanations displayed during execution.
 
-## Limitaciones
+## Limitations
 
-- No entiende el contexto del mensaje
-- Puede generar falsos positivos
-- Puede dejar pasar mensajes fraudulentos que no usen las palabras esperadas
-- No analiza enlaces de forma profunda
-- No revisa headers de correo
-- No analiza archivos adjuntos
-- No valida la identidad real del remitente
-- Las reglas pueden ser evadidas si alguien conoce cómo funcionan
-- No utiliza machine learning ni modelos de lenguaje
+- Does not understand the context of the message
+- May generate false positives
+- May miss fraudulent messages that avoid the expected keywords
+- Does not perform deep link analysis
+- Does not inspect email headers
+- Does not analyze attachments
+- Does not verify the sender's real identity
+- The rules can be bypassed if someone understands how they work
+- Does not use machine learning or language models
 
-## Qué aprendí
+## What I Learned
 
-Este proyecto me ayudó a entender que detectar phishing o ingeniería social solo con palabras clave puede funcionar en casos obvios, pero falla cuando el mensaje cambia de forma.
+This project helped me understand that detecting phishing or social engineering using only keywords can work in obvious cases, but fails when the wording of the message changes.
 
-También me permitió ver cómo aparecen los falsos positivos. Un mensaje legítimo puede usar palabras como “urgente” o “vence hoy” sin ser una estafa.
+It also allowed me to observe how false positives appear. A legitimate message may contain words such as "urgent" or "expires today" without being a scam.
 
-La principal lección fue que agregar más palabras a una lista no hace que el sistema entienda mejor el mensaje. Puede mejorar algunos casos concretos, pero también puede crear nuevos errores.
+The main lesson was that adding more words to a list does not make the system understand the message any better. It may improve some specific cases, but it can also introduce new errors.
 
-Construir este scanner me permitió comprender mejor los límites de las reglas fijas y por qué los sistemas reales suelen combinar varias capas de análisis.
+Building this scanner helped me better understand the limitations of fixed rules and why real-world systems usually combine multiple layers of analysis.
 
-## Próximo paso
+## Next Step
 
-Las limitaciones de este proyecto llevaron al desarrollo de NotPhish.
+The limitations of this project led to the development of NotPhish.
 
-NotPhish mantiene la idea de analizar señales sospechosas, pero agrega una interfaz web, más reglas, un modelo de machine learning y un sistema híbrido para combinar distintos resultados.
+NotPhish keeps the idea of analyzing suspicious signals, but adds a web interface, additional rules, a machine learning model, and a hybrid system that combines multiple results.
 
-Social Engineering Scanner fue mi primera aproximación al problema. NotPhish nació a partir de las preguntas que quedaron después de probarlo.
+Social Engineering Scanner was my first approach to the problem. NotPhish emerged from the questions that remained after testing it.
 
-## Tecnologías
+## Technologies
 
 Bash · grep · sed · tr
 
-## Desarrollo asistido por IA
+## AI-Assisted Development
 
-Este proyecto fue desarrollado con apoyo importante de Claude, de Anthropic, especialmente en la escritura del código, la estructura del script y algunas decisiones de implementación.
+This project was developed with significant support from Claude by Anthropic, particularly in writing the code, structuring the script, and making several implementation decisions.
 
-No presento este repositorio como una herramienta construida íntegramente de forma manual por mí. Lo comparto como un proyecto educativo y como parte de mi proceso real de aprendizaje en ciberseguridad e informática.
+I do not present this repository as a tool built entirely by hand. I share it as an educational project and as part of my real learning process in cybersecurity and computer science.
 
-Mi rol fue definir qué quería explorar, probar el programa, revisar sus resultados, detectar casos donde fallaba, ajustar ideas, evaluar sus limitaciones y entender progresivamente cómo funcionaba la lógica del scanner.
+My role was to define what I wanted to explore, test the program, review its results, identify situations where it failed, refine ideas, evaluate its limitations, and progressively understand how the scanner's logic worked.
 
-Trabajar con este proyecto me ayudó a aprender más que solo leer teoría, porque pude probar un detector concreto, ver cuándo acertaba, cuándo fallaba y por qué las reglas simples no bastan para resolver el problema completo.
+Working on this project helped me learn more than simply reading theory because I was able to experiment with a real detector, observe when it succeeded, when it failed, and why simple rules are not enough to solve the problem completely.
 
-## Licencia
+## License
 
 MIT
