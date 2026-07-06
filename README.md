@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="Social Engineering Scanner" width="100%">
+</p>
+
 # Social Engineering Scanner
 
 Proyecto educativo de ciberseguridad enfocado en detectar posibles intentos de ingeniería social mediante análisis basado en reglas.
