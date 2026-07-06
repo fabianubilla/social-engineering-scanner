@@ -1,183 +1,208 @@
-<p align="center">
-  <img src="assets/banner.png" alt="Social Engineering Scanner" width="100%">
-</p>
+# Social Engineering Scanner
 
-## ¿Se puede detectar phishing solo buscando palabras sospechosas?
+Proyecto educativo de ciberseguridad enfocado en detectar posibles intentos de ingeniería social mediante análisis basado en reglas.
 
-Este proyecto intenta hacerlo. Y al probarlo, empiezan a aparecer los problemas.
+## Resumen
 
-Ahí está la parte interesante.
+Social Engineering Scanner es una herramienta simple escrita en Bash que analiza mensajes buscando señales asociadas a ingeniería social.
 
-## De qué va esto
+El proyecto utiliza reglas fijas y palabras clave para detectar patrones como urgencia, autoridad y promesas de beneficio.
 
-Cuando empecé a estudiar ciberseguridad, una de las primeras preguntas que me hice fue:
+No es una herramienta lista para producción. Es un proyecto educativo creado para entender cómo funciona un detector basado en reglas, por qué puede servir en casos simples y por qué empieza a fallar cuando cambia el contexto.
 
-> ¿Cómo sabe un programa que un mensaje es una estafa?
-
-La respuesta más obvia: buscar palabras sospechosas.
-
-Así que construí eso. Un script Bash que busca palabras sospechosas y suma puntos.
-
-Funciona para casos obvios. Pero cuando lo probé con mensajes reales, empezaron a aparecer cosas que no esperaba: correos legítimos marcados como fraude, estafas que el detector no encontraba y mensajes ambiguos donde el score no decía nada útil.
-
-Esos problemas terminaron siendo la lección real del proyecto.
-
-## Qué quise entender
+## Objetivo
 
 Con este proyecto quise entender:
 
-- cómo funciona un detector basado en palabras clave;
-- qué es un falso positivo y por qué puede convertirse en un problema serio;
-- cómo se puede evadir un detector con reglas fijas;
-- por qué el contexto es difícil de capturar con reglas simples;
-- por qué los sistemas reales necesitan más capas de análisis.
+- cómo funciona un detector basado en palabras clave
+- cómo se puede asignar un puntaje de riesgo a un mensaje
+- qué es un falso positivo
+- por qué las reglas simples pueden ser evadidas
+- por qué el contexto es difícil de capturar con reglas fijas
+- por qué los sistemas reales necesitan más capas de análisis
 
-No intenté construir una herramienta lista para producción. La idea fue empezar por la aproximación más sencilla posible, ver hasta dónde podía llegar y entender por qué eventualmente deja de ser suficiente.
+## Funciones principales
 
-## Por qué Bash
+- análisis de mensajes desde la terminal
+- detección de palabras y expresiones sospechosas
+- puntaje de riesgo basado en reglas
+- alertas por patrones de ingeniería social
+- ejemplos guiados por etapas
+- explicación del resultado después de cada análisis
+- ejecución sin dependencias externas
 
-Porque era una herramienta lo suficientemente simple para el nivel en el que estaba, quería entender la idea detrás del detector y no perderme todavía en tecnologías más complejas.
+## Cómo funciona
 
-## Cómo usarlo
+El script analiza un mensaje buscando palabras, frases y patrones asociados a posibles intentos de ingeniería social.
+
+Cuando encuentra una coincidencia, suma puntos al score del mensaje y muestra una explicación de las señales detectadas.
+
+El enfoque es intencionalmente simple:
+
+```text
+buscar patrón → sumar puntos → mostrar alerta
+```
+
+Esto permite entender fácilmente por qué el sistema llega a un resultado determinado.
+
+La misma simpleza también muestra sus límites. El script no entiende intención, legitimidad ni contexto. Solo compara texto contra reglas previamente definidas.
+
+## Patrones que detecta
+
+El scanner busca señales relacionadas con tres patrones frecuentes en mensajes de ingeniería social.
+
+### Urgencia
+
+Busca expresiones que intentan presionar a la persona para actuar rápido.
+
+Ejemplos:
+
+- hoy
+- ahora
+- urgente
+- vence
+- último aviso
+
+### Autoridad
+
+Busca señales donde el mensaje intenta apoyarse en una figura de poder o confianza.
+
+Ejemplos:
+
+- gerente
+- banco
+- soporte
+- recursos humanos
+- dirección
+
+### Promesa de beneficio
+
+Busca mensajes que intentan llamar la atención ofreciendo algo atractivo.
+
+Ejemplos:
+
+- premio
+- bono
+- beneficio
+- regalo
+- promoción
+
+Estos patrones no prueban por sí solos que un mensaje sea fraude. Solo indican señales que pueden aumentar el riesgo.
+
+## Casos incluidos
+
+El proyecto incluye cuatro ejemplos en orden progresivo.
+
+Cada caso se muestra por etapas: primero el mensaje, luego el análisis, después el resultado y finalmente una explicación. El ritmo se controla con Enter.
+
+### 1. Correo limpio
+
+Un mensaje legítimo usado como línea base.
+
+El objetivo es comprobar que el scanner no marque como amenaza todo lo que analiza.
+
+### 2. CEO Fraud
+
+Un mensaje donde alguien finge ser una figura de autoridad y pide actuar con urgencia.
+
+Este caso muestra cuándo las reglas pueden funcionar bien, especialmente cuando el atacante usa palabras que el sistema espera encontrar.
+
+### 3. Falso positivo
+
+Un mensaje legítimo que activa señales sospechosas.
+
+Este caso muestra un problema importante: si un detector se equivoca demasiado, las personas pueden dejar de confiar en sus alertas.
+
+### 4. Bypass
+
+Un mensaje fraudulento escrito para evitar las reglas del scanner.
+
+Este caso muestra que las reglas fijas son predecibles. Si alguien conoce cómo funciona el detector, puede intentar escribir el mensaje de una forma que no active alertas.
+
+## Instalación y uso
+
+Clonar el repositorio:
 
 ```bash
 git clone https://github.com/fabianubilla/social-engineering-scanner.git
 cd social-engineering-scanner
+```
+
+Dar permisos de ejecución:
+
+```bash
 chmod +x scanner.sh
+```
+
+Ejecutar el scanner:
+
+```bash
 ./scanner.sh
 ```
 
-Requiere Bash. Sin dependencias externas. Funciona en Linux y macOS.
+Requiere Bash. Funciona en Linux y macOS.
 
-## Cómo funciona
+No necesita dependencias externas.
 
-El script analiza un mensaje buscando patrones asociados a ingeniería social.
+## Estructura del proyecto
 
-Cuando encuentra ciertas palabras o expresiones, suma puntos y activa alertas.
+```text
+social-engineering-scanner/
+├── scanner.sh
+└── README.md
+```
 
-Es un enfoque muy simple. Y justamente por eso me sirvió para entender qué estaba haciendo el detector, por qué llegaba a determinados resultados y en qué situaciones se equivocaba.
+## Archivo principal
 
-## Los cuatro ejemplos que probé
+### `scanner.sh`
 
-El script viene con cuatro casos en orden progresivo. Cada uno se muestra por etapas: primero el mensaje, luego el análisis, luego el resultado y finalmente la explicación. El ritmo se controla con Enter.
+Script principal del proyecto.
 
-### 1. Correo limpio — la línea base
+Contiene la lógica de detección, los mensajes de ejemplo, el sistema de puntaje y las explicaciones que se muestran durante la ejecución.
 
-Un newsletter real. Sin urgencia, sin autoridad, sin promesas.
+## Limitaciones
 
-El detector no encuentra nada. Esa es la respuesta correcta.
+- No entiende el contexto del mensaje
+- Puede generar falsos positivos
+- Puede dejar pasar mensajes fraudulentos que no usen las palabras esperadas
+- No analiza enlaces de forma profunda
+- No revisa headers de correo
+- No analiza archivos adjuntos
+- No valida la identidad real del remitente
+- Las reglas pueden ser evadidas si alguien conoce cómo funcionan
+- No utiliza machine learning ni modelos de lenguaje
 
-**Por qué importa:** antes de buscar fraude, hay que entender cómo se ve un mensaje normal y comprobar que el detector no marque como amenaza todo lo que analiza.
+## Qué aprendí
 
-### 2. CEO Fraud — cuando las reglas funcionan
+Este proyecto me ayudó a entender que detectar phishing o ingeniería social solo con palabras clave puede funcionar en casos obvios, pero falla cuando el mensaje cambia de forma.
 
-Alguien finge ser el gerente y pide una transferencia urgente.
+También me permitió ver cómo aparecen los falsos positivos. Un mensaje legítimo puede usar palabras como “urgente” o “vence hoy” sin ser una estafa.
 
-El detector lo atrapa porque el atacante usó exactamente las palabras que las reglas esperaban: gerente, directorio, hoy, ahora, cierre, bonos.
+La principal lección fue que agregar más palabras a una lista no hace que el sistema entienda mejor el mensaje. Puede mejorar algunos casos concretos, pero también puede crear nuevos errores.
 
-Pero la parte más importante del ejemplo no es solo que el detector acierte, sino entender por qué el mensaje es peligroso.
+Construir este scanner me permitió comprender mejor los límites de las reglas fijas y por qué los sistemas reales suelen combinar varias capas de análisis.
 
-> “No lo comentes con el equipo todavía.”
+## Próximo paso
 
-Esa frase apunta al aislamiento: impedir que la víctima pueda verificar con alguien antes de actuar.
+Las limitaciones de este proyecto llevaron al desarrollo de NotPhish.
 
-**Por qué importa:** el detector puede marcar señales visibles, pero el aprendizaje real está en entender la técnica detrás del mensaje. En este caso, no solo había urgencia y autoridad; también había aislamiento.
+NotPhish mantiene la idea de analizar señales sospechosas, pero agrega una interfaz web, más reglas, un modelo de machine learning y un sistema híbrido para combinar distintos resultados.
 
-### 3. Falso positivo — cuando el detector se equivoca
+Social Engineering Scanner fue mi primera aproximación al problema. NotPhish nació a partir de las preguntas que quedaron después de probarlo.
 
-Un correo legítimo de un banco avisando que una oferta vence hoy.
+## Tecnologías
 
-El detector activa alertas. El mensaje no es fraude.
+Bash · grep · sed · tr
 
-**Por qué importa:** si un sistema se equivoca seguido, las personas dejan de confiar en él. Y cuando dejan de confiar, también pueden terminar ignorando las alertas reales.
+## Desarrollo asistido por IA
 
-### 4. Bypass — cuando el atacante gana
+Este proyecto fue desarrollado con apoyo importante de Claude, de Anthropic, especialmente en la escritura del código, la estructura del script y algunas decisiones de implementación.
 
-Una estafa escrita para evadir este detector. Si la lees, es evidente. El script no encuentra nada.
+No presento este repositorio como una herramienta construida íntegramente de forma manual por mí. Lo comparto como un proyecto educativo y como parte de mi proceso real de aprendizaje en ciberseguridad e informática.
 
-**Por qué importa:** las reglas fijas son predecibles. Un atacante que las conoce puede diseñar el mensaje para evitarlas. Siempre van a existir puntos ciegos.
+Mi rol fue definir qué quería explorar, probar el programa, revisar sus resultados, detectar casos donde fallaba, ajustar ideas, evaluar sus limitaciones y entender progresivamente cómo funcionaba la lógica del scanner.
 
-## Los tres patrones que detecta
-
-Los estafadores utilizan distintas técnicas psicológicas para empujar decisiones rápidas. El psicólogo Robert Cialdini documentó varios principios de persuasión, y este script intenta detectar tres patrones relacionados con ellos:
-
-### Urgencia
-
-Meter prisa para que no haya tiempo de verificar.
-
-### Autoridad
-
-Fingir ser el jefe, el banco, recursos humanos o soporte técnico.
-
-### Promesa de beneficio
-
-Ofrecer algo atractivo para que la persona baje la guardia.
-
-## El problema de fondo: el contexto
-
-`grep` no entiende significado. Solo compara texto.
-
-Para una regla simple, estas dos frases pueden activar alertas parecidas:
-
-> “Tu cuenta será suspendida. Ingresa aquí para verificar tus datos.”
-
-> “Te recordamos que tu suscripción vence mañana.”
-
-Pero no significan lo mismo. La primera presiona y pide una acción sensible. La segunda solo informa una fecha.
-
-El sistema no comprende intención, legitimidad ni contexto. Y ese es uno de los motivos por los que detectar phishing real es difícil.
-
-## Por qué las reglas no escalan
-
-Agregar más palabras, más excepciones y más listas negras hace el detector más complejo, pero no necesariamente lo hace más inteligente.
-
-Se pueden corregir casos concretos agregando una regla nueva, pero cada nueva regla también puede producir otros falsos positivos o dejar nuevas formas de evasión.
-
-Ahí aparece la necesidad de combinar otros enfoques:
-
-### Machine Learning
-
-Aprender patrones desde muchos ejemplos, en vez de escribir todas las reglas a mano.
-
-### Modelos de lenguaje
-
-Analizar mejor el contexto, la intención y el significado completo del mensaje.
-
-### Headers del correo + SPF / DKIM / DMARC
-
-Revisar metadatos técnicos como los dominios, las rutas de envío, la autenticación y las firmas digitales.
-
-Este proyecto no implementa nada de eso, pero me ayudó a entender por qué esas capas existen.
-
-## Qué aprendí con este proyecto
-
-Cuando empecé, la pregunta era si podía detectar phishing buscando palabras sospechosas.
-
-Al probar el scanner, la pregunta terminó cambiando: ¿qué pasa cuando una regla parece funcionar en un ejemplo, pero falla apenas cambia la forma en que está escrito el mensaje?
-
-Construirlo me permitió entender de forma práctica cómo aparecen los falsos positivos, por qué las reglas pueden ser fáciles de evadir y por qué agregar más palabras no soluciona necesariamente el problema. También me sirvió para entender un poco mejor el funcionamiento básico de Bash.
-
-## El siguiente paso
-
-A raíz de las limitaciones que aparecieron en este scanner, decidí probar una versión más completa del mismo problema.
-
-El resultado fue [NotPhish](https://github.com/fabianubilla/notphish): un detector que mantiene la idea de las reglas, pero agrega más capas, como heurísticas, machine learning e interfaz web.
-
-El scanner fue mi primera aproximación al problema. NotPhish nació de las preguntas que quedaron después de probarlo.
-
-## Herramientas utilizadas
-
-Bash · `grep` · `sed` · `tr`
-
-Todas son herramientas estándar de Unix y el proyecto no necesita dependencias externas.
-
-## Sobre este proyecto
-
-Soy estudiante de Ingeniería Informática y Ciberseguridad. A la fecha de este proyecto, mis conocimientos de programación están en una etapa inicial: fundamentos, lógica y exploración práctica.
-
-Lo construí usando Claude, de Anthropic, como herramienta de desarrollo. La IA tuvo un rol importante en la implementación y en algunas decisiones técnicas. Mi parte fue definir qué quería explorar, probar el programa, revisar sus resultados, encontrar situaciones donde fallaba, iterar sobre las ideas y entender cómo funcionaba cada parte.
-
-Lo comparto como parte de mi proceso real de aprendizaje. Construir algo concreto, probarlo y encontrar sus límites me ayudó mucho más que limitarme a solo a la teoría.
+Trabajar con este proyecto me ayudó a aprender más que solo leer teoría, porque pude probar un detector concreto, ver cuándo acertaba, cuándo fallaba y por qué las reglas simples no bastan para resolver el problema completo.
 
 ## Licencia
 
