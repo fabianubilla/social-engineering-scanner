@@ -2,10 +2,6 @@
   <img src="assets/banner.png" alt="Social Engineering Scanner" width="100%">
 </p>
 
-# Social Engineering Scanner
-
-Proyecto educativo para explorar la detección de phishing basado en reglas.
-
 ## ¿Se puede detectar phishing solo buscando palabras sospechosas?
 
 Este proyecto intenta hacerlo. Y al probarlo, empiezan a aparecer los problemas.
